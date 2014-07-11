@@ -11,7 +11,13 @@ namespace DForm.Business
         public string Answerer { get; set; }
 
         private List<AnswerBase> _answers;
-        public List<AnswerBase> Answers { get; set; }
+        public IReadOnlyList<AnswerBase> Answers 
+        {
+            get
+            {
+                return _answers;
+            }
+        }
 
         public FormAnswer(string answerer)
         {

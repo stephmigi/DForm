@@ -11,7 +11,7 @@ namespace DForm.Business
         public string Title { get; set; }
 
         private Dictionary<string, FormAnswer> _formAnswers;
-        public Dictionary<string, FormAnswer> FormAnswers
+        public IReadOnlyDictionary<string, FormAnswer> FormAnswers
         {
             get
             {
@@ -20,7 +20,7 @@ namespace DForm.Business
         }
 
         private List<QuestionBase> _questions;
-        public List<QuestionBase> Questions
+        public IReadOnlyList<QuestionBase> Questions
         {
             get
             {
