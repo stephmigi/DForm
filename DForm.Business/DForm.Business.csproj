@@ -40,12 +40,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnswerBase.cs" />
+    <Compile Include="IQuestionContainer.cs" />
     <Compile Include="MortalAnswer.cs" />
     <Compile Include="Form.cs" />
     <Compile Include="FormAnswer.cs" />
     <Compile Include="MortalQuestion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionBase.cs" />
+    <Compile Include="QuestionGroup.cs" />
+    <Compile Include="QuestionsList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

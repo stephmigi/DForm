@@ -57,11 +57,11 @@ namespace DForm.Tests
             Form f = new Form();
             f.Title = FORM_NAME;
 
-            Assert.AreEqual(f.Questions.Count(), 0);
-            QuestionBase q1 = f.AddNewQuestion(typeof(MortalQuestion), "My mortal question");
-            Assert.AreEqual(f.Questions.Count(), 1);
+            Assert.AreEqual(f.Questions.NumberOfQuestions, 0);
+            QuestionBase q1 = f.Questions.AddNewQuestion(typeof(MortalQuestion), "My mortal question", true);
+            Assert.AreEqual(f.Questions.NumberOfQuestions, 1);
             Assert.AreEqual(q1.Title, "My mortal question");
-            Assert.IsTrue(f.Questions.Contains(q1));
+            //Assert.IsTrue(f.Questions.Contains(q1));
             Assert.IsTrue(q1.GetType() == typeof(MortalQuestion));
         }
 
@@ -71,12 +71,40 @@ namespace DForm.Tests
             Form f = new Form();
             f.Title = FORM_NAME;
 
-            QuestionBase q1 = f.AddNewQuestion(typeof(MortalQuestion), "My mortal question");
+            QuestionBase q1 = f.Questions.AddNewQuestion(typeof(MortalQuestion), "My mortal question", true);
 
             FormAnswer a = f.FindOrCreateFormAnswer(ANSWERER_1);
 
             var answerOfAnswerer1 = (MortalAnswer)a.FindOrCreateAnswerFor(q1);
             answerOfAnswerer1.MortalStringAnswer = "Bill's mortal answer";
+        }
+
+        [Test]
+        public void Form_AddQuestionGroupWithOneQuestion()
+        {
+            Form f = new Form();
+            f.Title = FORM_NAME;
+
+            Assert.IsTrue(f.Questions.NumberOfQuestions == 0);
+            var q1 = (QuestionGroup)f.Questions.AddNewQuestion(typeof(QuestionGroup), "My group", false);
+
+            Assert.IsTrue(f.Questions.NumberOfQuestions == 1);
+            Assert.IsTrue(q1.GetType() == typeof(QuestionGroup));
+            Assert.IsTrue(q1.Parent == f);
+
+            Assert.IsTrue(q1.Questions.NumberOfQuestions == 0);
+            var q2 = q1.Questions.AddNewQuestion(typeof(MortalQuestion), "My mortal question", true);
+            Assert.IsTrue(q2.Parent == q1);
+            Assert.IsTrue(q1.Questions.NumberOfQuestions == 1);
+
+            // todo : change parent should work:
+            // add code to change parent (remove question from current parent then
+            // add question in new parent) in QuestionList for example.
+            q2.Parent = f;
+            Assert.IsTrue(q2.Parent == f);
+            Assert.IsTrue(q1.Parent == f);
+            Assert.IsTrue(f.Questions.NumberOfQuestions == 2);
+            Assert.IsTrue(q1.Questions.NumberOfQuestions == 0);
         }
     }
 }

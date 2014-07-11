@@ -8,24 +8,26 @@ namespace DForm.Business
 {
     public abstract class QuestionBase
     {
-        private Form _parent;
+        private IQuestionContainer _parent;
         private string _title;
+        public bool IsAnswerSupported { get; set; }
 
-        public QuestionBase(string title)
+        public QuestionBase(string title, bool isAnswerSupported)
         {
             _parent = null;
             _title = title;
+            IsAnswerSupported = isAnswerSupported;
             //setIndex();
         }
 
-        public Form Parent
+        public IQuestionContainer Parent
         {
             get 
             { 
                 return _parent; 
             }
             set 
-            { 
+            {
                 _parent = value; 
             }
         }

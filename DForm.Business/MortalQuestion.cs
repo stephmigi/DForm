@@ -8,7 +8,7 @@ namespace DForm.Business
 {
     public class MortalQuestion : QuestionBase
     {
-	    public MortalQuestion(string title) : base(title){}
+        public MortalQuestion(string title, bool isAnswerSupported) : base(title, isAnswerSupported) { }
 	
 	    public string FreeAnswer {get; set;}
 

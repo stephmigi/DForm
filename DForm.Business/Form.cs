@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DForm.Business
 {
-    public class Form
+    public class Form : IQuestionContainer
     {
         public string Title { get; set; }
 
@@ -19,40 +20,21 @@ namespace DForm.Business
             }
         }
 
-        private List<QuestionBase> _questions;
-        public IReadOnlyList<QuestionBase> Questions
-        {
-            get
-            {
-                return _questions;
-            }
-        }
+        public QuestionsList Questions { get; set; }
 
         public Form()
         {
             _formAnswers = new Dictionary<string, FormAnswer>();
-            _questions = new List<QuestionBase>();
+            Questions = new QuestionsList();
         }
 
         public FormAnswer FindOrCreateFormAnswer(string answerer)
         {
-            if (!FormAnswers.ContainsKey(answerer))
+            if (!_formAnswers.ContainsKey(answerer))
             {
                 _formAnswers.Add(answerer, new FormAnswer(answerer));
             }
             return _formAnswers[answerer];  
-        }
-
-        public QuestionBase AddNewQuestion(Type questionType, string title)
-        {
-            //check for compatible types
-            if (typeof(QuestionBase).IsAssignableFrom(questionType))
-            {
-                var question = (QuestionBase)Activator.CreateInstance(questionType, title);
-                _questions.Add(question);
-                return question;
-            }
-            return null;
         }
     }
 }
