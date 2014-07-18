@@ -12,9 +12,9 @@ namespace DForm.Business
         private string _title;
         public bool IsAnswerSupported { get; set; }
 
-        public QuestionBase(string title, bool isAnswerSupported)
+        public QuestionBase(IQuestionContainer parent, string title, bool isAnswerSupported)
         {
-            _parent = null;
+            _parent = parent;
             _title = title;
             IsAnswerSupported = isAnswerSupported;
             //setIndex();
@@ -28,7 +28,9 @@ namespace DForm.Business
             }
             set 
             {
-                _parent = value; 
+                _parent.Questions.Remove(this);
+                _parent = value;
+                _parent.Questions.AddNewQuestion(this);
             }
         }
 

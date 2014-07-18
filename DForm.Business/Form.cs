@@ -25,7 +25,7 @@ namespace DForm.Business
         public Form()
         {
             _formAnswers = new Dictionary<string, FormAnswer>();
-            Questions = new QuestionsList();
+            Questions = new QuestionsList(this);
         }
 
         public FormAnswer FindOrCreateFormAnswer(string answerer)

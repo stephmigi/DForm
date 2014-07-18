@@ -10,10 +10,10 @@ namespace DForm.Business
     {
         public QuestionsList Questions { get; set; }
 
-        public QuestionGroup(string title, bool isAnswerSupported)
-            : base(title, isAnswerSupported) 
+        public QuestionGroup(IQuestionContainer parent, string title, bool isAnswerSupported)
+            : base(parent, title, isAnswerSupported) 
         {
-            Questions = new QuestionsList();
+            Questions = new QuestionsList(this);
         }
 
         public override AnswerBase CreateAnswer()
